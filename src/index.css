@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body { @apply bg-[#f6f7f9] text-ink-900 antialiased; background-image: radial-gradient(60rem 30rem at 10% -10%, #e8eefc 0, transparent 60%), radial-gradient(50rem 30rem at 100% 0, #f3e8fb 0, transparent 55%); background-attachment: fixed; }
+.glass { @apply bg-white/70 backdrop-blur-xl border border-white/80 shadow-[0_1px_2px_rgba(16,24,40,.04),0_8px_24px_-12px_rgba(16,24,40,.12)]; }
+.input { @apply w-full rounded-xl border border-ink-300 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-ink-900 focus:ring-2 focus:ring-ink-900/10; }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-ink-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-ink-700 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900; }
+.btn-ghost { @apply inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-ink-700 transition hover:bg-ink-100; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
