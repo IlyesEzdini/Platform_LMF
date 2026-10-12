@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: { sans: ['Geist', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'] },
-      colors: { ink: { 900: '#0f1115', 700: '#2b2f38', 500: '#6b7280', 300: '#d5d8de', 100: '#f3f4f6' } },
+      colors: { brand: { 50: '#eaf8fe', 100: '#d3f0fc', 500: '#00a8ec', 600: '#0080b8', 700: '#00669a' }, },
     },
   },
   plugins: [],
