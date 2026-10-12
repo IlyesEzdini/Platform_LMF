@@ -8,6 +8,7 @@ import { DeptBadge, RoleChip, StatusPill, fmt } from './Badge'
 import ComplaintForm from './ComplaintForm'
 import Conversation from './Conversation'
 import Notice, { type NoticeData } from './Notice'
+import Logo from './logo'
 
 export default function Dashboard({ profile }: { profile: Profile }) {
   const { signOut, execRequest } = useAuth()
@@ -49,6 +50,7 @@ export default function Dashboard({ profile }: { profile: Profile }) {
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-16 pt-5 sm:px-6">
+      <div className="mb-3 flex justify-center"><Logo className="h-14 sm:h-16" /></div>
       <header className="glass mb-6 flex items-center justify-between rounded-2xl px-4 py-3">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <span className="truncate font-semibold">{profile.username}</span>

@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { DEPARTMENTS, departmentsForRole } from '../lib/config'
 import type { Department, Role } from '../types'
 import Notice, { type NoticeData } from './Notice'
+import Logo from './logo'
 
 type Tab = 'login' | 'register'
 
@@ -65,10 +66,7 @@ export default function AuthPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-        <div className="mb-6 flex items-center justify-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-ink-900 text-white"><Users size={20} /></div>
-          <span className="text-lg font-semibold tracking-tight">Your Club Name</span>
-        </div>
+<div className="mb-6 flex justify-center"><Logo className="h-16 sm:h-20" /></div>
 
         <div className="glass rounded-3xl p-6 sm:p-8">
           <div role="tablist" className="mb-6 grid grid-cols-2 rounded-xl bg-ink-100 p-1 text-sm font-medium">
