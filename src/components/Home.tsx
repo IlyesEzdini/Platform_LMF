@@ -1,5 +1,5 @@
 import { ChevronRight, Lightbulb, Mail, type LucideIcon } from 'lucide-react'
-import hero from '../assets/home-hero.webp'
+import hero from '../assets/friend.png'
 import type { Kind } from '../types'
 
 // Each button sits on one pill of the image. Adjust left / top / width / height (in %) if it is slightly off.
