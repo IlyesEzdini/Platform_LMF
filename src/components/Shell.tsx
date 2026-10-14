@@ -29,7 +29,7 @@ export default function Shell({ profile }: { profile: Profile }) {
         <div className="mb-5"><Notice notice={{ type: 'success', text: `Your request for executive access (${DEPARTMENTS[execRequest.requested_department].label}) is pending administrator approval.` }} /></div>
       )}
       {profile.role === 'member' && execRequest?.status === 'rejected' && (
-        <div className="mb-5"><Notice notice={{ type: 'error', text: 'Your executive access request was not approved.' }} /></div>
+        <div className="mb-5"><Notice notice={{ type: 'error', text: 'Your executive access request was not approved' }} /></div>
       )}
 
       {view === 'home'
