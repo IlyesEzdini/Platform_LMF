@@ -2,7 +2,6 @@ import { Lightbulb, Mail } from 'lucide-react'
 import hero from '../assets/friend.png'
 import type { Kind } from '../types'
 
-// To change the background image, replace src/assets/home-hero.webp (or change the import above).
 // The two clickable zones sit exactly on the two pill buttons drawn in the image (percentages of the image).
 const ZONES: { kind: Kind; label: string; style: React.CSSProperties }[] = [
   { kind: 'idea', label: 'Share an idea', style: { left: '6.6%', top: '47.3%', width: '30.7%', height: '18.6%' } },
