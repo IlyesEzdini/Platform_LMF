@@ -17,24 +17,38 @@ npm run dev            # http://localhost:5173
 npm run build          # production build (type-check + bundle)
 ```
 
-## 3. Executive privileges (trusted workflow)
-Sign-up always creates a **member** profile, whatever the browser sends. Choosing "Executive member" only creates a *pending request* (`executive_requests`).
-An administrator approves it in the SQL Editor:
+## 3. Roles and privileges (trusted workflow, admin only)
+Roles: `member`, `executive_member`, `dean`. Sign-up always creates a **member**; choosing "Executive member" only creates a pending request. Run these in the SQL Editor:
 ```sql
-select id, username from public.profiles;                       -- find the user
-select public.approve_executive_request('<user-uuid>');         -- grant role + requested position
-select public.reject_executive_request('<user-uuid>');          -- or reject
+select id, username, role, department from public.profiles;       -- find the user
+select public.approve_executive_request('<user-uuid>');           -- executive + the position requested at sign-up
+select public.reject_executive_request('<user-uuid>');
+select public.make_dean('<user-uuid>');                           -- the dean (never selectable in the UI)
 ```
-These functions are not executable by API roles (anon/authenticated). The user must sign out/in (or refresh) to see the change.
+Promoting someone by editing `role` in the Table Editor also works: the position they requested at sign-up is applied automatically (role `dean` always gets department `dean`).
 
-## 4. Security model
+**One-time fix for executives created before v2** (stuck in "Event"):
+```sql
+update public.profiles p set department = r.requested_department
+from public.executive_requests r
+where r.user_id = p.id and p.role = 'executive_member';
+```
+Users must sign out and in again to see a role change.
+
+## 4. Security model and visibility rules
+| | Complaints | Ideas |
+|---|---|---|
+| Member | submit, read own | submit, read own |
+| Executive | submit, read own **+ all members' complaints** (only HR replies) | submit, read own |
+| Executive HR | replies to **members'** complaints | — |
+| Executive President | as executive | **reads all ideas, only one who replies** |
+| Dean | **reads and replies to executives' complaints only** | reads all ideas (no reply) |
+The dean does not submit complaints or ideas. Executives' own complaints are invisible to other executives.
+
 - RLS on all tables; no UPDATE/DELETE granted to API roles; no INSERT/UPDATE policy on `profiles`.
-- `complaints`: client sends only `content`. A trigger sets sender, role, department, color (from `department_colors`).
-- `complaint_replies`: client sends only `complaint_id` + `content`. A trigger sets the responder; the INSERT policy requires `role = 'executive_member' and department = 'hr'`.
-- Helper functions are `SECURITY DEFINER` with `search_path = ''` (no recursive policies).
-- Only the public anon key is used in the frontend.
-- Colors: edit the `department_colors` table (backend source of truth) and the fallback map in `src/lib/config.ts`.
-- Note: usernames are unique (case-insensitive); a duplicate makes sign-up fail with a "username taken" message.
+- The client sends only `content` (+ the parent id for replies); sender, role, department, color, responder and responder title are set by triggers.
+- Helper functions are `SECURITY DEFINER` with `search_path = ''`. Only the public anon key is used in the frontend.
+- Colors: `department_colors` table + fallback map in `src/lib/config.ts`. Home image: replace `src/assets/home-hero.webp`.
 
 ## 5. GitHub
 ```bash
@@ -69,7 +83,11 @@ git push -u origin main
 | 5 | Member submits + opens complaint | Visible with right color | |
 | 6 | Member selects other users' complaints via API | 0 rows | |
 | 7 | Any executive opens dashboard | Sees all complaints | |
-| 8 | Non-HR exec / regular HR member inserts reply via API | RLS violation | |
+| 8 | Non-HR exec / regular HR member inserts complaint reply via API | RLS violation | |
+| 8b | Exec A reads exec B's complaints via API | 0 rows (only the dean sees them) | |
+| 8c | Dean replies to a member's complaint | RLS violation | |
+| 8d | Non-president/dean reads others' ideas; anyone but the president replies to an idea | 0 rows / RLS violation | |
+| 8e | Approve a "president" request | Profile shows Executive · President | |
 | 9 | Approved HR exec replies | Reply shown to sender and executives | |
 | 10 | Insert complaint with forged `sender_id`/`color_code` | Column privilege denied | |
 | 11 | Insert reply with forged `responder_id` | Column privilege denied | |

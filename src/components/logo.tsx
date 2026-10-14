@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpg'
 
 // mix-blend-multiply makes the JPEG's white background blend into the page.
 export default function Logo({ className = 'h-14' }: { className?: string }) {

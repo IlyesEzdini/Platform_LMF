@@ -2,7 +2,7 @@ import { Loader2, AlertTriangle } from 'lucide-react'
 import { useAuth } from './context/AuthContext'
 import { isConfigured } from './lib/supabase'
 import AuthPage from './components/AuthPage'
-import Dashboard from './components/Dashboard'
+import Shell from './components/Shell'
 
 export default function App() {
   const { session, profile, loading, signOut } = useAuth()
@@ -27,7 +27,7 @@ export default function App() {
       </Centered>
     )
   }
-  return <Dashboard profile={profile} />
+  return <Shell profile={profile} />
 }
 
 function Centered({ children }: { children: React.ReactNode }) {
