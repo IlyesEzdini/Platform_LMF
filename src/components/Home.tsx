@@ -1,11 +1,12 @@
-import { Lightbulb, Mail } from 'lucide-react'
-import hero from '../assets/friend.png'
+import { ChevronRight, Lightbulb, Mail, type LucideIcon } from 'lucide-react'
+import hero from '../assets/home-hero.webp'
 import type { Kind } from '../types'
 
-// The two clickable zones sit exactly on the two pill buttons drawn in the image (percentages of the image).
-const ZONES: { kind: Kind; label: string; style: React.CSSProperties }[] = [
-  { kind: 'idea', label: 'Share an idea', style: { left: '6.6%', top: '47.3%', width: '30.7%', height: '18.6%' } },
-  { kind: 'complaint', label: 'Share a complaint', style: { left: '63%', top: '48.5%', width: '29.7%', height: '18.6%' } },
+// Each button sits on one pill of the image. Adjust left / top / width / height (in %) if it is slightly off.
+// `top` is the vertical CENTER of the button.
+const ZONES: { kind: Kind; label: string; short: string; Icon: LucideIcon; style: React.CSSProperties }[] = [
+  { kind: 'idea', label: 'Share an idea', short: 'Idea', Icon: Lightbulb, style: { left: '5.5%', top: '55.9%', width: '30.5%', height: '22%' } },
+  { kind: 'complaint', label: 'Complaint', short: 'Complaint', Icon: Mail, style: { left: '63.4%', top: '56.6%', width: '31%', height: '22%' } },
 ]
 
 export default function Home({ username, onPick }: { username: string; onPick: (k: Kind) => void }) {
@@ -16,16 +17,16 @@ export default function Home({ username, onPick }: { username: string; onPick: (
 
       <div className="relative mx-auto w-full max-w-5xl">
         <img src={hero} alt="" draggable={false} className="pointer-events-none h-auto w-full select-none mix-blend-multiply" />
-        {ZONES.map((z) => (
-          <button key={z.kind} onClick={() => onPick(z.kind)} aria-label={z.label} title={z.label} style={z.style}
-            className="absolute rounded-full transition hover:bg-white/30 hover:ring-2 hover:ring-brand-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600" />
+        {ZONES.map(({ kind, label, short, Icon, style }) => (
+          <button key={kind} onClick={() => onPick(kind)} aria-label={label}
+            style={{ ...style, transform: 'translateY(-50%)', minHeight: 44, fontSize: 'clamp(10px, 2.1vw, 22px)' }}
+            className="absolute flex items-center justify-center gap-[0.5em] rounded-full font-semibold text-ink-900 transition hover:bg-white/50 hover:ring-2 hover:ring-brand-500/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+            <Icon className="h-[1.25em] w-[1.25em] text-brand-600" />
+            <span className="hidden sm:inline">{label}</span>
+            <span className="sm:hidden">{short}</span>
+            <ChevronRight className="hidden h-[1.25em] w-[1.25em] text-brand-600 sm:block" />
+          </button>
         ))}
-      </div>
-
-      {/* Mobile: the image is small, so show real buttons as well */}
-      <div className="mt-4 grid gap-3 sm:hidden">
-        <button className="btn py-3" onClick={() => onPick('idea')}><Lightbulb size={18} /> Share an idea</button>
-        <button className="btn py-3" onClick={() => onPick('complaint')}><Mail size={18} /> Complaint</button>
       </div>
     </div>
   )
