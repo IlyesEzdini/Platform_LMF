@@ -1,5 +1,5 @@
 import { Lightbulb, Mail } from 'lucide-react'
-import hero from '/assets/friend.png'
+import hero from '../assets/friend.png'
 import type { Kind } from '../types'
 
 // To change the background image, replace src/assets/home-hero.webp (or change the import above).
