@@ -3,7 +3,7 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { DEPARTMENTS, departmentsForRole } from '../lib/config'
 import type { Department, Role } from '../types'
-import Logo from './Logo'
+import Logo from './ClubLogo'
 import Notice, { type NoticeData } from './Notice'
 
 type Tab = 'login' | 'register'

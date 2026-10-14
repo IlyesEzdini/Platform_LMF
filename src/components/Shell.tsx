@@ -6,7 +6,7 @@ import type { Kind, Profile } from '../types'
 import { DeptBadge, RoleChip } from './Badge'
 import Home from './Home'
 import InboxPage from './InboxPage'
-import Logo from './Logo'
+import Logo from './ClubLogo'
 import Notice from './Notice'
 
 export default function Shell({ profile }: { profile: Profile }) {
